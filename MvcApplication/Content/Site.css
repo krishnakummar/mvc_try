@@ -12,6 +12,7 @@ body
     padding: 0;
     color: #696969;
     background:red;
+    background-repeat:no-repeat;
 }
 
 a:link
