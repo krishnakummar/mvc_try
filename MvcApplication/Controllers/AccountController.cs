@@ -74,6 +74,11 @@ namespace MvcApplication.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public bool Register_test()
+        {
+            return true;
+        }
+
         // **************************************
         // URL: /Account/Register
         // **************************************
