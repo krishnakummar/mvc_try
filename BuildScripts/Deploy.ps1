@@ -98,6 +98,7 @@ task copyPkg  {
         throw "robocopy commande failed"
         exit 1
     }
+    Remove-IfExists "$deployPkgDir\.git"
 }
  
 # merging and doing config transformations
