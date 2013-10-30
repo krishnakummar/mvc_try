@@ -17,7 +17,8 @@ properties {
     $ftpProductionBackupFolder = "backup"
     $deployToFtp = $true
 }
- 
+echo "trying out echo"
+echo $sourceDir
 # the default task that is executed if no task is defined when calling this script
 task default -depends local
 # task that is used when building the project at a local development environment, depending on the mergeConfig task
