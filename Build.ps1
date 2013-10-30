@@ -8,10 +8,10 @@ param(
 function Build() {
     Try {
         if($Environment -ieq 'debug') {
-            .\BuildScripts\tools\psake\psake.ps1 ".\BuildScripts\Deploy.ps1" -properties @{ config='debug'; environment="$Environment" }
+            .\BuildScripts\psake\psake.ps1 ".\BuildScripts\Deploy.ps1" -properties @{ config='debug'; environment="$Environment" }
         }
         if($Environment -ieq 'production') {
-            .\BuildScripts\tools\psake\psake.ps1 ".\BuildScripts\Deploy.ps1" -properties @{ config='release'; environment="$Environment"; deployToFtp = $DeployToFtp } "production"
+            .\BuildScripts\psake\psake.ps1 ".\BuildScripts\Deploy.ps1" -properties @{ config='release'; environment="$Environment"; deployToFtp = $DeployToFtp } "production"
         }
         Write-Host "$Environment build done!"
     }
