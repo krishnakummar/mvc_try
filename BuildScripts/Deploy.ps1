@@ -92,13 +92,12 @@ task copyPkg  {
     # robocopy has some issue with a trailing slash in the path (or it's by design, don't know), lets remove that slash
     $deployPath = Remove-LastChar "$deployPkgDir"
     # copying the required files for the deloy package to the deploy folder created at setup
-    robocopy "$sourceDir" "$deployPath" /MIR /XD obj bundler Configurations Properties /XF *.bundle *.coffee *.less *.pdb *.cs *.csproj *.csproj.user *.sln .gitignore README.txt packages.config
+    robocopy "$sourceDir" "$deployPath" .git /MIR /XD obj bundler Configurations Properties /XF *.bundle *.coffee *.less *.pdb *.cs *.csproj *.csproj.user *.sln .gitignore README.txt packages.config
     # checking so that last exit code is ok else break the build (robocopy returning greater that 1 if fail)
     if($LASTEXITCODE -gt 1) {
         throw "robocopy commande failed"
         exit 1
-    }
-    Remove-IfExists "$deployPkgDir\.git"
+    }    
 }
  
 # merging and doing config transformations
