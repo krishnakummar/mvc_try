@@ -70,9 +70,10 @@ task setup {
 # compiling csharp and client script with bundler
 task compile -depends setup {
     # executing msbuild for compiling the project
-    exec { msbuild  $sourceDir\MvcApplication.sln /t:Clean /t:Build /p:Configuration=$config /v:q /nologo }
     echo "Last exit code"
+    exec { msbuild  $sourceDir\MvcApplication.sln /t:Clean /t:Build /p:Configuration=$config /v:q /nologo }    
     echo "$LASTEXITCODE"
+    echo " --- ###"
     <#
         executing Bundle.ps1, Bundle.ps1 is a wrapper around bundler that is compiling client script
         the wrapper also is executed as post-build script when compiling in debug mode. For more info check out => http://antonkallenberg.com/2012/07/26/using-servicestack-bundler/
