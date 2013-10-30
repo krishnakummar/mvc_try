@@ -1,10 +1,10 @@
 # properties that is used by the script
 properties {
     $dateLabel = ([DateTime]::Now.ToString("yyyy-MM-dd_HH-mm-ss"))
-    $baseDir = resolve-path .\..\..\..\
+    $baseDir = "C:\Program Files (x86)\Jenkins\jobs\test\workspace" #mycommand.path#resolve-path .\..\..\..\
     $sourceDir = "$baseDir"
     $toolsDir = "$sourceDir\BuildScripts\"
-    $deployBaseDir = "$baseDir\Deploy\"
+    $deployBaseDir = "E:\Projects\mvctry_deploy"
     $deployPkgDir = "$deployBaseDir\Package\"
     $backupDir = "$deployBaseDir\Backup\"
     $testBaseDir = "$baseDir\EPiBooks.Tests\"
@@ -18,7 +18,8 @@ properties {
     $deployToFtp = $true
 }
 echo "trying out echo"
-echo $sourceDir
+echo "$baseDir"
+echo "--------------"
 # the default task that is executed if no task is defined when calling this script
 task default -depends local
 # task that is used when building the project at a local development environment, depending on the mergeConfig task
@@ -85,11 +86,11 @@ task compile -depends setup {
  
 
 # copying the deployment package
-task copyPkg -depends test {
+task copyPkg  {
     # robocopy has some issue with a trailing slash in the path (or it's by design, don't know), lets remove that slash
     $deployPath = Remove-LastChar "$deployPkgDir"
     # copying the required files for the deloy package to the deploy folder created at setup
-    robocopy "$sourceDir\EPiBooks" "$deployPath" /MIR /XD obj bundler Configurations Properties /XF *.bundle *.coffee *.less *.pdb *.cs *.csproj *.csproj.user *.sln .gitignore README.txt packages.config
+    robocopy "$sourceDir" "$deployPath" /MIR /XD obj bundler Configurations Properties /XF *.bundle *.coffee *.less *.pdb *.cs *.csproj *.csproj.user *.sln .gitignore README.txt packages.config
     # checking so that last exit code is ok else break the build (robocopy returning greater that 1 if fail)
     if($LASTEXITCODE -gt 1) {
         throw "robocopy commande failed"
