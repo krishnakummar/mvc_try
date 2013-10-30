@@ -1,7 +1,7 @@
 # properties that is used by the script
 properties {
     $dateLabel = ([DateTime]::Now.ToString("yyyy-MM-dd_HH-mm-ss"))
-    $baseDir = "C:\Program Files (x86)\Jenkins\jobs\test\workspace" #mycommand.path#resolve-path .\..\..\..\
+    $baseDir = "C:\Program Files (x86)\Jenkins\jobs\test\workspace" 
     $sourceDir = "$baseDir"
     $toolsDir = "$sourceDir\BuildScripts\"
     $deployBaseDir = "E:\Projects\mvctry_deploy"
@@ -70,8 +70,9 @@ task setup {
 # compiling csharp and client script with bundler
 task compile -depends setup {
     # executing msbuild for compiling the project
-    exec { msbuild  $sourceDir\EPiBooks.sln /t:Clean /t:Build /p:Configuration=$config /v:q /nologo }
- 
+    exec { msbuild  $sourceDir\MvcApplication.sln /t:Clean /t:Build /p:Configuration=$config /v:q /nologo }
+    echo "Last exit code"
+    echo "$LASTEXITCODE"
     <#
         executing Bundle.ps1, Bundle.ps1 is a wrapper around bundler that is compiling client script
         the wrapper also is executed as post-build script when compiling in debug mode. For more info check out => http://antonkallenberg.com/2012/07/26/using-servicestack-bundler/
