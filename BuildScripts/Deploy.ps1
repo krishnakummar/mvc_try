@@ -2,8 +2,8 @@
 properties {
     $dateLabel = ([DateTime]::Now.ToString("yyyy-MM-dd_HH-mm-ss"))
     $baseDir = resolve-path .\..\..\..\
-    $sourceDir = "$baseDir\Web\"
-    $toolsDir = "$sourceDir\EPiBooks\Tools\"
+    $sourceDir = "$baseDir"
+    $toolsDir = "$sourceDir\BuildScripts\"
     $deployBaseDir = "$baseDir\Deploy\"
     $deployPkgDir = "$deployBaseDir\Package\"
     $backupDir = "$deployBaseDir\Backup\"
@@ -82,17 +82,7 @@ task compile -depends setup {
     }
 }
  
-# running unit tests
-task test -depends compile {
-    # executing mspec and suppling the test assembly
-    &"$sourceDir\packages\Machine.Specifications.0.5.7\tools\mspec-clr4.exe" "$testBaseDir\bin\$config\EPiBooks.Tests.dll"
-    # checking so that last exit code is ok else break the build
-    if($LASTEXITCODE -ne 0) {
-        throw "Failed to run unit tests"
-        exit 1
-    }
-}
- 
+
 # copying the deployment package
 task copyPkg -depends test {
     # robocopy has some issue with a trailing slash in the path (or it's by design, don't know), lets remove that slash
